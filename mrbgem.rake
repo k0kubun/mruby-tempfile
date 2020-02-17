@@ -9,8 +9,6 @@ MRuby::Gem::Specification.new('mruby-tempfile') do |spec|
   spec.add_dependency 'mruby-sprintf', core: 'mruby-sprintf'
   spec.add_dependency 'mruby-time', core: 'mruby-time'
   spec.add_dependency 'mruby-errno'
-
-  if spec.build.cc.command.include?('musl')
-    spec.linker.libraries << 'fts'
-  end
+  spec.add_dependency 'mruby-process'
+  spec.add_dependency 'mruby-shellwords'
 end

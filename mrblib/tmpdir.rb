@@ -43,7 +43,9 @@ class Dir
       if Tempfile._world_writable_and_not_sticky(File.dirname(path))
         raise ArgumentError, "parent directory is world writable but not sticky"
       end
-      Tempfile._rm_rf(path)
+      unless system("rm -rf #{path.shellescape}")
+        raise "Failed to execute: rm -rf #{path.shellescape}"
+      end
     end
   end
 end
