@@ -68,6 +68,7 @@ mrb_tempfile_getpid(mrb_state *mrb, mrb_value self)
   return mrb_fixnum_value(getpid());
 }
 
+#ifndef _WIN32
 mrb_value
 mrb_tempfile_world_writable_and_not_sticky(mrb_state *mrb, mrb_value self)
 {
@@ -84,6 +85,7 @@ mrb_tempfile_world_writable_and_not_sticky(mrb_state *mrb, mrb_value self)
     return mrb_false_value();
   }
 }
+#endif
 
 void
 mrb_init_tempfile_path(mrb_state *mrb)
@@ -108,7 +110,9 @@ mrb_mruby_tempfile_gem_init(mrb_state *mrb)
   MRB_SET_INSTANCE_TT(tempfile_class, MRB_TT_DATA);
 
   mrb_define_class_method(mrb, tempfile_class, "_getpid", mrb_tempfile_getpid, MRB_ARGS_NONE());
+#ifndef _WIN32
   mrb_define_class_method(mrb, tempfile_class, "_world_writable_and_not_sticky", mrb_tempfile_world_writable_and_not_sticky, MRB_ARGS_REQ(1));
+#endif
 
   mrb_init_tempfile_path(mrb);
 }

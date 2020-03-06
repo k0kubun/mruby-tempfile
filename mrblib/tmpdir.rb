@@ -40,7 +40,7 @@ class Dir
     begin
       yield path.dup
     ensure
-      if Tempfile._world_writable_and_not_sticky(File.dirname(path))
+      if Tempfile.respond_to?(:_world_writable_and_not_sticky) && Tempfile._world_writable_and_not_sticky(File.dirname(path))
         raise ArgumentError, "parent directory is world writable but not sticky"
       end
       unless system("rm -rf #{path.shellescape}")
